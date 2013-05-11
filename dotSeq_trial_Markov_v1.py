@@ -57,7 +57,7 @@ isi = 15
 trialDuration = targetDuration + isi
 
 
-# generate MArkov chain
+# generate Markov chain
 def weighted_choice(weights):
     """
     Given a list of weights, this function returns an index randomly, according to these weights
