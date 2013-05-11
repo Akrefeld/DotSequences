@@ -90,7 +90,9 @@ def markovChain(stateSpace, trans, start_probs, chain_length=10):
     return seq
     #
 thisMarkovChain = markovChain(stateSpace, trans, start_probs, chain_length=100)
+print thisMarkovChain
     
+# TODO: position names would make more sense if A were top left, instead of top right
 positions = {'A': [circleRadius*sin(pi/4), circleRadius*cos(pi/4)], 
              'B': [circleRadius*sin(3*pi/4), circleRadius*cos(3*pi/4)],
              'C': [circleRadius*sin(5*pi/4), circleRadius*cos(5*pi/4)],
