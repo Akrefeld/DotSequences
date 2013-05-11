@@ -22,15 +22,15 @@ trans_mat = np.array([[0.7, 0.2, 0.0, 0.1],
 
 trans = pd.DataFrame(trans_mat, index=stateSpace, columns=stateSpace)
 
-def markovChain(stateSpace, trans, start_probs, sequenceLength=10):
+def markovChain(stateSpace, trans, start_probs, chain_length=1000):
     seq = []
     seq.append(stateSpace[weighted_choice(start_probs)])
     
-    for k in range(sequenceLength):
+    for k in range(chain_length):
         # .loc introduced in 0.11 - not available in psychopy version of pandas
         # seq.append(stateSpace[weighted_choice(trans.loc[seq[k]])])
         # use .ix instead
          seq.append(stateSpace[weighted_choice(trans.ix[seq[k]])])
     return seq
         
-thisMarkovChain = markovChain(stateSpace, trans, start_probs, sequenceLength=100)
+thisMarkovChain = markovChain(stateSpace, trans, start_probs, chain_length=1000)

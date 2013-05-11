@@ -78,18 +78,18 @@ trans_mat = np.array([[0.7, 0.2, 0.0, 0.1],
 
 trans = pd.DataFrame(trans_mat, index=stateSpace, columns=stateSpace)
 
-def markovChain(stateSpace, trans, start_probs, sequenceLength=10):
+def markovChain(stateSpace, trans, start_probs, chain_length=10):
     seq = []
     seq.append(stateSpace[weighted_choice(start_probs)])
     
-    for k in range(sequenceLength):
+    for k in range(chain_length):
         # .loc introduced in 0.11 - not available in psychopy version of pandas
         # seq.append(stateSpace[weighted_choice(trans.loc[seq[k]])])
         # use .ix instead
          seq.append(stateSpace[weighted_choice(trans.ix[seq[k]])])
     return seq
     #
-
+thisMarkovChain = markovChain(stateSpace, trans, start_probs, chain_length=100)
     
 positions = {'A': [circleRadius*sin(pi/4), circleRadius*cos(pi/4)], 
              'B': [circleRadius*sin(3*pi/4), circleRadius*cos(3*pi/4)],
@@ -134,6 +134,7 @@ target = visual.Circle(win = win, pos=positions['D'], radius = markerSize,
 globalClock = core.Clock()  # to track the time since experiment started
 routineTimer = core.CountdownTimer()  # to track time remaining of each (non-slip) routine 
 
+
 # set up handler to look after randomisation of conditions etc
 trials = data.TrialHandler(nReps=sequenceLength, method=u'sequential', 
     extraInfo=expInfo, originPath=None,
@@ -170,8 +171,6 @@ for thisTrial in trials:
     # thisPosition = rand.choice(positionKeys)
 
     
-    thisMarkovChain = markovChain(stateSpace, trans, start_probs, sequenceLength=100)
-
 
     # keep track of which components have finished
     trialComponents = []
