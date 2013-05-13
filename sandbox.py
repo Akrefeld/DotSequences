@@ -230,52 +230,100 @@ globalClock = core.Clock()  # to track the time since experiment started
 routineTimer = core.CountdownTimer()  # to track time remaining of each (non-slip) routine
 
 
+
 # set up handler to look after randomisation of conditions etc
-trials = data.TrialHandler(nReps=sequenceLength, method=u'sequential', 
-                           extraInfo=expInfo, originPath=None,
-                           trialList=[None],
-                           seed=None, name='trials')
-thisExp.addLoop(trials)  # add the loop to the experiment
-thisTrial = trials.trialList[0]  # so we can initialise stimuli with some values
-# abbreviate parameter names if possible (e.g. rgb=thisTrial.rgb)
-if thisTrial != None:
-    for paramName in thisTrial.keys():
-        exec(paramName + '= thisTrial.' + paramName)
+blockLoop = data.TrialHandler(nReps=2, method=u'sequential', 
+    extraInfo=expInfo, originPath=None,
+    trialList=[None],
+    seed=None, name='blockLoop')
+thisExp.addLoop(blockLoop)  # add the loop to the experiment
+thisBlockLoop = blockLoop.trialList[0]  # so we can initialise stimuli with some values
+# abbreviate parameter names if possible (e.g. rgb=thisOuter_loop.rgb)
+if thisBlockLoop != None:
+    for paramName in thisBlockLoop.keys():
+        exec(paramName + '= thisBlockLoop.' + paramName)
 
-for thisTrial in trials:
-    currentLoop = trials
-    # abbreviate parameter names if possible (e.g. rgb = thisTrial.rgb)
-    if thisTrial != None:
-        for paramName in thisTrial.keys():
-            exec(paramName + '= thisTrial.' + paramName)
+for thisBlockLoop in blockLoop:
+    currentLoop = blockLoop
+    # abbreviate parameter names if possible (e.g. rgb = thisOuter_loop.rgb)
+    if thisBlockLoop != None:
+        for paramName in thisBlockLoop.keys():
+            exec(paramName + '= thisBlockLoop.' + paramName)
+            
 
-    #------Prepare to start Routine "trial"-------
-    t = 0
-    trialClock.reset()  # clock 
-    frameN = -1
+    # set up handler to look after randomisation of conditions etc
+    trialLoop = data.TrialHandler(nReps=sequenceLength, method=u'sequential', 
+                                  extraInfo=expInfo, originPath=None,
+                                  trialList=[None],
+                                  seed=None, name='trialLoop')
+    thisExp.addLoop(trialLoop)  # add the loop to the experiment
+    thisTrialLoop = trialLoop.trialList[0]  # so we can initialise stimuli with some values
+    # abbreviate parameter names if possible (e.g. rgb=thisTrialLoop.rgb)
+    if thisTrialLoop != None:
+        for paramName in thisTrialLoop.keys():
+            exec(paramName + '= thisTrialLoop.' + paramName)
 
-    observedHistory = []
-    thisSequence = markovChainGenerator(stateSpace, trans, observedHistory, start_probs)
-    observedHistory.append(thisSequence.next())
+    for thisTrialLoop in trialLoop:
+        currentLoop = trialLoop
+        # abbreviate parameter names if possible (e.g. rgb = thisTrialLoop.rgb)
+        if thisTrialLoop != None:
+            for paramName in thisTrialLoop.keys():
+                exec(paramName + '= thisTrialLoop.' + paramName)
+
+        #------Prepare to start Routine "trial"-------
+        t = 0
+        trialClock.reset()  # clock 
+        frameN = -1
+
+        observedHistory = []
+        thisSequence = markovChainGenerator(stateSpace, trans, observedHistory, start_probs)
+        observedHistory.append(thisSequence.next())
 
 
 
 ################################################################################
 ### demo
-trialComponents = []
-trialComponents.append(pos1)
-trialComponents.append(pos2)
-trialComponents.append(pos3)
-trialComponents.append(pos4)
-trialComponents.append(target)
-trialComponents.append(fixCross)
+        trialComponents = []
+        trialComponents.append(pos1)
+        trialComponents.append(pos2)
+        trialComponents.append(pos3)
+        trialComponents.append(pos4)
+        trialComponents.append(target)
+        trialComponents.append(fixCross)
+        
+        [item.draw() for item in trialComponents]
+        win.flip()
+        core.wait(5)
 
-[item.draw() for item in trialComponents]
-win.flip()
-core.wait(5)
+        ### end demo
+        ################################################################################
 
-### end demo
-################################################################################
+    # end'trialLoop'
+        
+    # get names of stimulus parameters
+    if trialLoop.trialList in ([], [None], None):  params = []
+    else:  params = trialLoop.trialList[0].keys()
+    # save data for this loop
+    trialLoop.saveAsExcel(filename + '.xlsx', sheetName='trialLoop',
+        stimOut=params,
+        dataOut=['n','all_mean','all_std', 'all_raw'])
+    trialLoop.saveAsText(filename + 'trialLoop.csv', delim=',',
+        stimOut=params,
+        dataOut=['n','all_mean','all_std', 'all_raw'])
+    thisExp.nextEntry()
+
+    # end 'blockLoop'
+    
+# get names of stimulus parameters
+if blockLoop.trialList in ([], [None], None):  params = []
+else:  params = blockL.trialList[0].keys()
+# save data for this loop
+blockLoop.saveAsExcel(filename + '.xlsx', sheetName='blockLoop',
+    stimOut=params,
+    dataOut=['n','all_mean','all_std', 'all_raw'])
+blockLoop.saveAsText(filename + 'blockLoop.csv', delim=',',
+    stimOut=params,
+    dataOut=['n','all_mean','all_std', 'all_raw'])
 
 
 
