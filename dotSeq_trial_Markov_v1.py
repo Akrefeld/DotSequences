@@ -51,9 +51,9 @@ circleOpacity = 0.3
 circleRadius = 100
 markerSize = 20
 targetColor = [1, 1, -1] # yellow
-targetDuration = 45
+targetDuration = 30
 targetSize = [40, 40]
-isi = 15
+isi = 30
 trialDuration = targetDuration + isi
 
 
@@ -69,15 +69,35 @@ def weighted_choice(weights):
             return i
 
 stateSpace = ['A','B','C','D']
+N = len(stateSpace)
+
 start_probs = np.array([0.6, 0.3, 0.1, 0.0])
-# trans = arange(16).reshape(4,4)
-trans_mat = np.array([[0.7, 0.2, 0.0, 0.1],
-                      [0.3, 0.5, 0.2, 0.0],
-                      [0.0, 0.3, 0.5, 0.2],
-                      [0.2, 0.0, 0.2, 0.6]])
+
+## generate transition matrix
+"""
+solution from:
+http://stackoverflow.com/questions/8904694/how-to-normalize-a-2-dimensional-numpy-array-in-python-less-verbose
+"""
+trans_mat = np.random.randint(0,100.0,N*N).reshape(N,N).astype(float) 
+# row sums:
+# row_sums = trans_mat.sum(axis=1)
+# trans_mat = trans_mat / row_sums[:, np.newaxis]
+
+# with the following (/=) we can eliminate intermediate temp variables:
+trans_mat /= trans_mat.sum(axis=1)[:, np.newaxis]
+
+# trans_mat = np.array([[0.6, 0.2, 0.1, 0.1],
+#                       [0.3, 0.5, 0.2, 0.0],
+#                       [0.0, 0.3, 0.5, 0.2],
+#                       [0.2, 0.0, 0.2, 0.6]])
+
+# check if trans_mat is a stochastic matrix
+isStochastic = trans_mat.sum(axis=1)
+print isStochastic
 
 trans = pd.DataFrame(trans_mat, index=stateSpace, columns=stateSpace)
 
+##
 def markovChain(stateSpace, trans, start_probs, chain_length=10):
     seq = []
     seq.append(stateSpace[weighted_choice(start_probs)])
@@ -101,183 +121,233 @@ positions = {'A': [circleRadius*sin(pi/4), circleRadius*cos(pi/4)],
 fixCross = visual.TextStim(win=win, ori=0, name='fixCross',
                            text='+',    font='Arial',
                            units='pix', pos=[0, 0], height=20, wrapWidth=None,
-                           color='white', colorSpace='rgb', opacity=1,
+                           color='white', colorSpace='rgb', opacity=circleOpacity,
                            depth=-4.0)
 
-circle = visual.Circle(win = win, radius = circleRadius, edges=512, lineColor =
-                       (1, 1, 1), fillColor = 'black', fillColorSpace = 'rgb',
-                       interpolate = True, opacity = 0)
+# circle = visual.Circle(win = win, radius = circleRadius, edges=512, lineColor =
+#                        (1, 1, 1), fillColor = 'black', fillColorSpace = 'rgb',
+#                        interpolate = True, opacity = 0)
 
-pos1 = visual.Circle(win = win, pos=positions['A'], radius = markerSize,
-                     edges=256, lineColor = (1, 1, 1), fillColor = 'black',
+# pos1 = visual.Circle(win = win, pos=positions['A'], radius = markerSize,
+#                      edges=256, lineColor = (1, 1, 1), fillColor = 'black',
+#                      fillColorSpace = 'rgb', interpolate = True, opacity =
+#                      circleOpacity)
+
+pos1 = visual.Rect(win = win, pos=positions['A'], width=40, height=40,
+                     lineColor = (1, 1, 1), fillColor = 'black',
                      fillColorSpace = 'rgb', interpolate = True, opacity =
                      circleOpacity)
 
-pos2 = visual.Circle(win = win, pos=positions['B'], radius = markerSize,
-                     edges=256, lineColor = (1, 1, 1), fillColor = 'black',
+# pos2 = visual.Circle(win = win, pos=positions['B'], radius = markerSize,
+#                      edges=256, lineColor = (1, 1, 1), fillColor = 'black',
+#                      fillColorSpace = 'rgb', interpolate = True, opacity =
+#                      circleOpacity)
+
+pos2 = visual.Rect(win = win, pos=positions['B'], width=40, height=40,
+                     lineColor = (1, 1, 1), fillColor = 'black',
                      fillColorSpace = 'rgb', interpolate = True, opacity =
                      circleOpacity)
 
-pos3 = visual.Circle(win = win, pos=positions['C'], radius = markerSize,
-                     edges=256, lineColor = (1, 1, 1), fillColor = 'black',
+# pos3 = visual.Circle(win = win, pos=positions['C'], radius = markerSize,
+#                      edges=256, lineColor = (1, 1, 1), fillColor = 'black',
+#                      fillColorSpace = 'rgb', interpolate = True, opacity =
+#                      circleOpacity)
+pos3 = visual.Rect(win = win, pos=positions['C'], width=40, height=40,
+                     lineColor = (1, 1, 1), fillColor = 'black',
                      fillColorSpace = 'rgb', interpolate = True, opacity =
                      circleOpacity)
 
-pos4 = visual.Circle(win = win, pos=positions['D'], radius = markerSize,
-                     edges=256, lineColor = (1, 1, 1), fillColor = 'black',
+# pos4 = visual.Circle(win = win, pos=positions['D'], radius = markerSize,
+#                      edges=256, lineColor = (1, 1, 1), fillColor = 'black',
+#                      fillColorSpace = 'rgb', interpolate = True, opacity =
+#                      circleOpacity)
+pos4 = visual.Rect(win = win, pos=positions['D'], width=40, height=40,
+                     lineColor = (1, 1, 1), fillColor = 'black',
                      fillColorSpace = 'rgb', interpolate = True, opacity =
                      circleOpacity)
 
-target = visual.Circle(win = win, pos=positions['D'], radius = markerSize,
-                       edges=256, lineColor = targetColor, fillColor = targetColor,
-                       fillColorSpace = 'rgb', interpolate = True, opacity = 1)
+# target = visual.Circle(win = win, pos=positions['D'], radius = markerSize,
+#                        edges=256, lineColor = targetColor, fillColor = targetColor,
+#                        fillColorSpace = 'rgb', interpolate = True, opacity = 1)
+
+target = visual.Rect(win = win, pos=positions['A'], width=40, height=40,
+                     lineColor = targetColor, fillColor = targetColor,
+                    opacity = 1)
 
 # Create some handy timers
 globalClock = core.Clock()  # to track the time since experiment started
 routineTimer = core.CountdownTimer()  # to track time remaining of each (non-slip) routine 
 
-
 # set up handler to look after randomisation of conditions etc
-trials = data.TrialHandler(nReps=sequenceLength, method=u'sequential', 
+outer_loop = data.TrialHandler(nReps=2, method=u'sequential', 
     extraInfo=expInfo, originPath=None,
     trialList=[None],
-    seed=None, name='trials')
-thisExp.addLoop(trials)  # add the loop to the experiment
-thisTrial = trials.trialList[0]  # so we can initialise stimuli with some values
-# abbreviate parameter names if possible (e.g. rgb=thisTrial.rgb)
-if thisTrial != None:
-    for paramName in thisTrial.keys():
-        exec(paramName + '= thisTrial.' + paramName)
+    seed=None, name='outer_loop')
+thisExp.addLoop(outer_loop)  # add the loop to the experiment
+thisOuter_loop = outer_loop.trialList[0]  # so we can initialise stimuli with some values
+# abbreviate parameter names if possible (e.g. rgb=thisOuter_loop.rgb)
+if thisOuter_loop != None:
+    for paramName in thisOuter_loop.keys():
+        exec(paramName + '= thisOuter_loop.' + paramName)
 
-for thisTrial in trials:
-    currentLoop = trials
-    # abbreviate parameter names if possible (e.g. rgb = thisTrial.rgb)
+for thisOuter_loop in outer_loop:
+    currentLoop = outer_loop
+    # abbreviate parameter names if possible (e.g. rgb = thisOuter_loop.rgb)
+    if thisOuter_loop != None:
+        for paramName in thisOuter_loop.keys():
+            exec(paramName + '= thisOuter_loop.' + paramName)
+            
+    # set up handler to look after randomisation of conditions etc
+    trials = data.TrialHandler(nReps=sequenceLength, method=u'sequential', 
+        extraInfo=expInfo, originPath=None,
+        trialList=[None],
+        seed=None, name='trials')
+    thisExp.addLoop(trials)  # add the loop to the experiment
+    thisTrial = trials.trialList[0]  # so we can initialise stimuli with some values
+    # abbreviate parameter names if possible (e.g. rgb=thisTrial.rgb)
     if thisTrial != None:
         for paramName in thisTrial.keys():
             exec(paramName + '= thisTrial.' + paramName)
-    
-    #------Prepare to start Routine "trial"-------
-    t = 0
-    trialClock.reset()  # clock 
-    frameN = -1
-    # update component parameters for each repeat
 
-    #
-    
+    for thisTrial in trials:
+        currentLoop = trials
+        # abbreviate parameter names if possible (e.g. rgb = thisTrial.rgb)
+        if thisTrial != None:
+            for paramName in thisTrial.keys():
+                exec(paramName + '= thisTrial.' + paramName)
+        
+        #------Prepare to start Routine "trial"-------
+        t = 0
+        trialClock.reset()  # clock 
+        frameN = -1
+
+        history = []
+        # update component parameters for each repeat
+
+        #
+        
 
 
-    positionKeys=positions.keys()
-    positionKeys.sort()
-    
-    # set random target position
-    # thisPosition = rand.choice(positionKeys)
+        # positionKeys=positions.keys()
+        # positionKeys.sort()
+        
+        # set random target position
+        # thisPosition = rand.choice(positionKeys)
 
-    
-
-    # keep track of which components have finished
-    trialComponents = []
-    trialComponents.append(pos1)
-    trialComponents.append(pos2)
-    trialComponents.append(pos3)
-    trialComponents.append(pos4)
-    trialComponents.append(target)
-    trialComponents.append(fixCross)
-    for thisComponent in trialComponents:
-        if hasattr(thisComponent, 'status'):
-            thisComponent.status = NOT_STARTED
-    
-    #-------Start Routine "trial"-------
-    continueRoutine = True
-    while continueRoutine:
-        # get current time
-        t = trialClock.getTime()
-        frameN = frameN + 1  # number of completed frames (so 0 is the first frame)
         target.setPos(positions[thisMarkovChain[trials.thisN]])
-        # update/draw components on each frame
-        
-        
-        # *pos1* updates
-        if frameN >= 0 and pos1.status == NOT_STARTED:
-            # keep track of start time/frame for later
-            pos1.tStart = t  # underestimates by a little under one frame
-            pos1.frameNStart = frameN  # exact frame index
-            pos1.setAutoDraw(True)
-        elif pos1.status == STARTED and frameN >= (pos1.frameNStart + trialDuration):
-            pos1.setAutoDraw(False)
-        
-        # *pos2* updates
-        if frameN >= 0 and pos2.status == NOT_STARTED:
-            # keep track of start time/frame for later
-            pos2.tStart = t  # underestimates by a little under one frame
-            pos2.frameNStart = frameN  # exact frame index
-            pos2.setAutoDraw(True)
-        elif pos2.status == STARTED and frameN >= (pos2.frameNStart + trialDuration):
-            pos2.setAutoDraw(False)
-        
-        # *pos3* updates
-        if frameN >= 0 and pos3.status == NOT_STARTED:
-            # keep track of start time/frame for later
-            pos3.tStart = t  # underestimates by a little under one frame
-            pos3.frameNStart = frameN  # exact frame index
-            pos3.setAutoDraw(True)
-        elif pos3.status == STARTED and frameN >= (pos3.frameNStart + trialDuration):
-            pos3.setAutoDraw(False)
-        
-        # *pos4* updates
-        if frameN >= 0 and pos4.status == NOT_STARTED:
-            # keep track of start time/frame for later
-            pos4.tStart = t  # underestimates by a little under one frame
-            pos4.frameNStart = frameN  # exact frame index
-            pos4.setAutoDraw(True)
-        elif pos4.status == STARTED and frameN >= (pos4.frameNStart + trialDuration):
-            pos4.setAutoDraw(False)
-        
-        # *target* updates
-        if frameN >= 0 and target.status == NOT_STARTED:
-            # keep track of start time/frame for later
-            target.tStart = t  # underestimates by a little under one frame
-            target.frameNStart = frameN  # exact frame index
-            target.setAutoDraw(True)
-        elif target.status == STARTED and frameN >= (target.frameNStart + targetDuration):
-            target.setAutoDraw(False)
-        
-        # *fixCross* updates
-        if frameN >= 0 and fixCross.status == NOT_STARTED:
-            # keep track of start time/frame for later
-            fixCross.tStart = t  # underestimates by a little under one frame
-            fixCross.frameNStart = frameN  # exact frame index
-            fixCross.setAutoDraw(True)
-        elif fixCross.status == STARTED and frameN >= (fixCross.frameNStart + trialDuration):
-            fixCross.setAutoDraw(False)
-        
-        # check if all components have finished
-        if not continueRoutine:  # a component has requested a forced-end of Routine
-            routineTimer.reset()  # if we abort early the non-slip timer needs reset
-            break
-        continueRoutine = False  # will revert to True if at least one component still running
+        history.append(thisMarkovChain[trials.thisN])
+        currentLoop.addData('History', history[-1])
+        currentLoop.addData('Position', positions[thisMarkovChain[trials.thisN]])
+
+        # keep track of which components have finished
+        trialComponents = []
+        trialComponents.append(pos1)
+        trialComponents.append(pos2)
+        trialComponents.append(pos3)
+        trialComponents.append(pos4)
+        trialComponents.append(target)
+        trialComponents.append(fixCross)
         for thisComponent in trialComponents:
-            if hasattr(thisComponent, "status") and thisComponent.status != FINISHED:
-                continueRoutine = True
-                break  # at least one component has not yet finished
+            if hasattr(thisComponent, 'status'):
+                thisComponent.status = NOT_STARTED
         
-        # check for quit (the [Esc] key)
-        if event.getKeys(["escape"]):
-            core.quit()
+        #-------Start Routine "trial"-------
+        continueRoutine = True
+        while continueRoutine:
+            # get current time
+            t = trialClock.getTime()
+            frameN = frameN + 1  # number of completed frames (so 0 is the first frame)
+            # target.setPos(positions[thisMarkovChain[trials.thisN]])
+            # history.append(positions[thisMarkovChain[trials.thisN]])
+            # update/draw components on each frame
+            
+            
+            # *pos1* updates
+            if frameN >= 0 and pos1.status == NOT_STARTED:
+                # keep track of start time/frame for later
+                pos1.tStart = t  # underestimates by a little under one frame
+                pos1.frameNStart = frameN  # exact frame index
+                pos1.setAutoDraw(True)
+            elif pos1.status == STARTED and frameN >= (pos1.frameNStart + trialDuration):
+                pos1.setAutoDraw(False)
+            
+            # *pos2* updates
+            if frameN >= 0 and pos2.status == NOT_STARTED:
+                # keep track of start time/frame for later
+                pos2.tStart = t  # underestimates by a little under one frame
+                pos2.frameNStart = frameN  # exact frame index
+                pos2.setAutoDraw(True)
+            elif pos2.status == STARTED and frameN >= (pos2.frameNStart + trialDuration):
+                pos2.setAutoDraw(False)
+            
+            # *pos3* updates
+            if frameN >= 0 and pos3.status == NOT_STARTED:
+                # keep track of start time/frame for later
+                pos3.tStart = t  # underestimates by a little under one frame
+                pos3.frameNStart = frameN  # exact frame index
+                pos3.setAutoDraw(True)
+            elif pos3.status == STARTED and frameN >= (pos3.frameNStart + trialDuration):
+                pos3.setAutoDraw(False)
+            
+            # *pos4* updates
+            if frameN >= 0 and pos4.status == NOT_STARTED:
+                # keep track of start time/frame for later
+                pos4.tStart = t  # underestimates by a little under one frame
+                pos4.frameNStart = frameN  # exact frame index
+                pos4.setAutoDraw(True)
+            elif pos4.status == STARTED and frameN >= (pos4.frameNStart + trialDuration):
+                pos4.setAutoDraw(False)
+            
+            # *target* updates
+            if frameN >= 0 and target.status == NOT_STARTED:
+                # keep track of start time/frame for later
+                target.tStart = t  # underestimates by a little under one frame
+                target.frameNStart = frameN  # exact frame index
+                target.setAutoDraw(True)
+            elif target.status == STARTED and frameN >= (target.frameNStart + targetDuration):
+                target.setAutoDraw(False)
+            
+            # *fixCross* updates
+            if frameN >= 0 and fixCross.status == NOT_STARTED:
+                # keep track of start time/frame for later
+                fixCross.tStart = t  # underestimates by a little under one frame
+                fixCross.frameNStart = frameN  # exact frame index
+                fixCross.setAutoDraw(True)
+            elif fixCross.status == STARTED and frameN >= (fixCross.frameNStart + trialDuration):
+                fixCross.setAutoDraw(False)
+            
+            # check if all components have finished
+            if not continueRoutine:  # a component has requested a forced-end of Routine
+                routineTimer.reset()  # if we abort early the non-slip timer needs reset
+                break
+            continueRoutine = False  # will revert to True if at least one component still running
+            for thisComponent in trialComponents:
+                if hasattr(thisComponent, "status") and thisComponent.status != FINISHED:
+                    continueRoutine = True
+                    break  # at least one component has not yet finished
+            
+            # check for quit (the [Esc] key)
+            if event.getKeys(["escape"]):
+                core.quit()
+            
+            # refresh the screen
+            if continueRoutine:  # don't flip if this routine is over or we'll get a blank screen
+                win.flip()
+            else:  # this Routine was not non-slip safe so reset non-slip timer
+                routineTimer.reset()
         
-        # refresh the screen
-        if continueRoutine:  # don't flip if this routine is over or we'll get a blank screen
-            win.flip()
-        else:  # this Routine was not non-slip safe so reset non-slip timer
-            routineTimer.reset()
-    
-    #-------Ending Routine "trial"-------
-    for thisComponent in trialComponents:
-        if hasattr(thisComponent, "setAutoDraw"):
-            thisComponent.setAutoDraw(False)
-    
+        #-------Ending Routine "trial"-------
+        for thisComponent in trialComponents:
+            if hasattr(thisComponent, "setAutoDraw"):
+                thisComponent.setAutoDraw(False)
+        
+        thisExp.nextEntry()
+        
+    # completed n repeats of 'trials'
+
     thisExp.nextEntry()
     
-# completed n repeats of 'trials'
+# completed 5 repeats of 'outer_loop'
 
 
 win.close()
