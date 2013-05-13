@@ -1,7 +1,7 @@
 <PsychoPy2experiment version="1.77.00" encoding="utf-8">
   <Settings>
     <Param name="Show mouse" val="False" valType="bool" updates="None"/>
-    <Param name="Save csv file" val="False" valType="bool" updates="None"/>
+    <Param name="Save csv file" val="True" valType="bool" updates="None"/>
     <Param name="Monitor" val="testMonitor" valType="str" updates="None"/>
     <Param name="Enable Escape" val="True" valType="bool" updates="None"/>
     <Param name="color" val="$[0,0,0]" valType="str" updates="None"/>
@@ -9,14 +9,14 @@
     <Param name="Full-screen window" val="False" valType="bool" updates="None"/>
     <Param name="colorSpace" val="rgb" valType="str" updates="None"/>
     <Param name="Save log file" val="True" valType="bool" updates="None"/>
-    <Param name="Experiment info" val="{u'session': u'001', u'participant': u''}" valType="code" updates="None"/>
-    <Param name="Save excel file" val="False" valType="bool" updates="None"/>
+    <Param name="Experiment info" val="{u'session': u'001', u'participant': u'ae'}" valType="code" updates="None"/>
+    <Param name="Save excel file" val="True" valType="bool" updates="None"/>
     <Param name="Save wide csv file" val="True" valType="bool" updates="None"/>
     <Param name="Save psydat file" val="True" valType="bool" updates="None"/>
-    <Param name="expName" val="dotSeq_trial" valType="str" updates="None"/>
+    <Param name="expName" val="dotSeqExample" valType="str" updates="None"/>
     <Param name="logging level" val="exp" valType="code" updates="None"/>
     <Param name="Units" val="use prefs" valType="str" updates="None"/>
-    <Param name="Show info dlg" val="False" valType="bool" updates="None"/>
+    <Param name="Show info dlg" val="True" valType="bool" updates="None"/>
     <Param name="Saved data folder" val="Data" valType="code" updates="None"/>
     <Param name="Screen" val="1" valType="num" updates="None"/>
   </Settings>
@@ -165,6 +165,21 @@
         <Param name="font" val="Arial" valType="str" updates="constant"/>
         <Param name="letterHeight" val="30" valType="code" updates="constant"/>
       </TextComponent>
+      <KeyboardComponent name="keyResponse">
+        <Param name="correctAns" val="$isCatchTrial" valType="str" updates="constant"/>
+        <Param name="storeCorrect" val="True" valType="bool" updates="constant"/>
+        <Param name="name" val="keyResponse" valType="code" updates="None"/>
+        <Param name="stopVal" val="trialDuration" valType="code" updates="constant"/>
+        <Param name="durationEstim" val="0.5" valType="code" updates="None"/>
+        <Param name="forceEndRoutine" val="False" valType="bool" updates="constant"/>
+        <Param name="startEstim" val="0" valType="code" updates="None"/>
+        <Param name="discard previous" val="True" valType="bool" updates="constant"/>
+        <Param name="startType" val="frame N" valType="str" updates="None"/>
+        <Param name="allowedKeys" val="'space'" valType="code" updates="constant"/>
+        <Param name="stopType" val="duration (s)" valType="str" updates="None"/>
+        <Param name="startVal" val="0" valType="code" updates="None"/>
+        <Param name="store" val="first key" valType="str" updates="constant"/>
+      </KeyboardComponent>
     </Routine>
     <Routine name="pause">
       <TextComponent name="text">

@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 """
-This experiment was created using PsychoPy2 Experiment Builder (v1.77.00), Mon May 13 09:01:36 2013
+This experiment was created using PsychoPy2 Experiment Builder (v1.77.00), Mon May 13 16:16:50 2013
 If you publish work using this script please cite the relevant PsychoPy publications
   Peirce, JW (2007) PsychoPy - Psychophysics software in Python. Journal of Neuroscience Methods, 162(1-2), 8-13.
   Peirce, JW (2009) Generating stimuli for neuroscience using PsychoPy. Frontiers in Neuroinformatics, 2:10. doi: 10.3389/neuro.11.010.2008
@@ -16,8 +16,10 @@ from numpy.random import random, randint, normal, shuffle
 import os  # handy system and path functions
 
 # Store info about the experiment session
-expName = 'dotSeq_trial'  # from the Builder filename that created this script
-expInfo = {u'session': u'001', u'participant': u''}
+expName = 'dotSeqExample'  # from the Builder filename that created this script
+expInfo = {u'session': u'001', u'participant': u'ae'}
+dlg = gui.DlgFromDict(dictionary=expInfo, title=expName)
+if dlg.OK == False: core.quit()  # user pressed cancel
 expInfo['date'] = data.getDateStr()  # add a simple timestamp
 expInfo['expName'] = expName
 
@@ -167,6 +169,8 @@ for thisOuter_loop in outer_loop:
                              edges=256, lineColor = (1, 1, 1), fillColor = targetFillColor,
                              fillColorSpace = 'rgb', interpolate = True, opacity = 1)
         target.setPos(thisPosition)
+        keyResponse = event.BuilderKeyResponse()  # create an object of type KeyResponse
+        keyResponse.status = NOT_STARTED
         # keep track of which components have finished
         trialComponents = []
         trialComponents.append(pos1)
@@ -175,6 +179,7 @@ for thisOuter_loop in outer_loop:
         trialComponents.append(pos4)
         trialComponents.append(target)
         trialComponents.append(fixCross)
+        trialComponents.append(keyResponse)
         for thisComponent in trialComponents:
             if hasattr(thisComponent, 'status'):
                 thisComponent.status = NOT_STARTED
@@ -242,6 +247,27 @@ for thisOuter_loop in outer_loop:
             elif fixCross.status == STARTED and frameN >= (fixCross.frameNStart + 30):
                 fixCross.setAutoDraw(False)
             
+            # *keyResponse* updates
+            if frameN >= 0 and keyResponse.status == NOT_STARTED:
+                # keep track of start time/frame for later
+                keyResponse.tStart = t  # underestimates by a little under one frame
+                keyResponse.frameNStart = frameN  # exact frame index
+                keyResponse.status = STARTED
+                # keyboard checking is just starting
+                keyResponse.clock.reset()  # now t=0
+                event.clearEvents()
+            elif keyResponse.status == STARTED and t >= (keyResponse.tStart + trialDuration):
+                keyResponse.status = STOPPED
+            if keyResponse.status == STARTED:
+                theseKeys = event.getKeys(keyList=['space'])
+                if len(theseKeys) > 0:  # at least one key was pressed
+                    if keyResponse.keys == []:  # then this was the first keypress
+                        keyResponse.keys = theseKeys[0]  # just the first key pressed
+                        keyResponse.rt = keyResponse.clock.getTime()
+                        # was this 'correct'?
+                        if (keyResponse.keys == str(isCatchTrial)): keyResponse.corr = 1
+                        else: keyResponse.corr=0
+            
             # check if all components have finished
             if not continueRoutine:  # a component has requested a forced-end of Routine
                 routineTimer.reset()  # if we abort early the non-slip timer needs reset
@@ -267,14 +293,45 @@ for thisOuter_loop in outer_loop:
             if hasattr(thisComponent, "setAutoDraw"):
                 thisComponent.setAutoDraw(False)
         
+        # check responses
+        if len(keyResponse.keys) == 0:  # No response was made
+           keyResponse.keys=None
+           # was no response the correct answer?!
+           if str(isCatchTrial).lower() == 'none': keyResponse.corr = 1  # correct non-response
+           else: keyResponse.corr = 0  # failed to respond (incorrectly)
+        # store data for inner_loop (TrialHandler)
+        inner_loop.addData('keyResponse.keys',keyResponse.keys)
+        inner_loop.addData('keyResponse.corr', keyResponse.corr)
+        if keyResponse.keys != None:  # we had a response
+            inner_loop.addData('keyResponse.rt', keyResponse.rt)
         thisExp.nextEntry()
         
     # completed 10 repeats of 'inner_loop'
     
+    # get names of stimulus parameters
+    if inner_loop.trialList in ([], [None], None):  params = []
+    else:  params = inner_loop.trialList[0].keys()
+    # save data for this loop
+    inner_loop.saveAsExcel(filename + '.xlsx', sheetName='inner_loop',
+        stimOut=params,
+        dataOut=['n','all_mean','all_std', 'all_raw'])
+    inner_loop.saveAsText(filename + 'inner_loop.csv', delim=',',
+        stimOut=params,
+        dataOut=['n','all_mean','all_std', 'all_raw'])
     thisExp.nextEntry()
     
 # completed 5 repeats of 'outer_loop'
 
+# get names of stimulus parameters
+if outer_loop.trialList in ([], [None], None):  params = []
+else:  params = outer_loop.trialList[0].keys()
+# save data for this loop
+outer_loop.saveAsExcel(filename + '.xlsx', sheetName='outer_loop',
+    stimOut=params,
+    dataOut=['n','all_mean','all_std', 'all_raw'])
+outer_loop.saveAsText(filename + 'outer_loop.csv', delim=',',
+    stimOut=params,
+    dataOut=['n','all_mean','all_std', 'all_raw'])
 
 win.close()
 core.quit()
