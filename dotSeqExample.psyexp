@@ -1,0 +1,230 @@
+<PsychoPy2experiment version="1.77.00" encoding="utf-8">
+  <Settings>
+    <Param name="Show mouse" val="False" valType="bool" updates="None"/>
+    <Param name="Save csv file" val="False" valType="bool" updates="None"/>
+    <Param name="Monitor" val="testMonitor" valType="str" updates="None"/>
+    <Param name="Enable Escape" val="True" valType="bool" updates="None"/>
+    <Param name="color" val="$[0,0,0]" valType="str" updates="None"/>
+    <Param name="Window size (pixels)" val="[800, 800]" valType="code" updates="None"/>
+    <Param name="Full-screen window" val="False" valType="bool" updates="None"/>
+    <Param name="colorSpace" val="rgb" valType="str" updates="None"/>
+    <Param name="Save log file" val="True" valType="bool" updates="None"/>
+    <Param name="Experiment info" val="{u'session': u'001', u'participant': u''}" valType="code" updates="None"/>
+    <Param name="Save excel file" val="False" valType="bool" updates="None"/>
+    <Param name="Save wide csv file" val="True" valType="bool" updates="None"/>
+    <Param name="Save psydat file" val="True" valType="bool" updates="None"/>
+    <Param name="expName" val="dotSeq_trial" valType="str" updates="None"/>
+    <Param name="logging level" val="exp" valType="code" updates="None"/>
+    <Param name="Units" val="use prefs" valType="str" updates="None"/>
+    <Param name="Show info dlg" val="False" valType="bool" updates="None"/>
+    <Param name="Saved data folder" val="Data" valType="code" updates="None"/>
+    <Param name="Screen" val="1" valType="num" updates="None"/>
+  </Settings>
+  <Routines>
+    <Routine name="trial">
+      <CodeComponent name="code">
+        <Param name="Begin Experiment" val="" valType="code" updates="constant"/>
+        <Param name="name" val="code" valType="code" updates="None"/>
+        <Param name="Each Frame" val="" valType="code" updates="constant"/>
+        <Param name="Begin Routine" val="circleOpacity = 0.3&#10;circleRadius = 100&#10;markerSize = 20&#10;targetFillColor = [1, 1, -1] # yellow&#10;targetDuration = 30&#10;targetSize = [40, 40]&#10;#&#10;&#10;positions = {'pos1': [circleRadius*sin(pi/4), circleRadius*cos(pi/4)], &#10;             'pos2': [circleRadius*sin(3*pi/4), circleRadius*cos(3*pi/4)],&#10;             'pos3': [circleRadius*sin(5*pi/4), circleRadius*cos(5*pi/4)],&#10;             'pos4': [circleRadius*sin(7*pi/4), circleRadius*cos(7*pi/4)]}&#10;&#10;fixCross = visual.TextStim(win=win, ori=0, name='fixCross',&#10;    text='+',    font='Arial',&#10;    units='pix', pos=[0, 0], height=20, wrapWidth=None,&#10;    color='white', colorSpace='rgb', opacity=1,&#10;    depth=-4.0)&#10;&#10;circle = visual.Circle(win = win, radius = circleRadius, edges=512, lineColor =&#10;                       (1, 1, 1), fillColor = 'black', fillColorSpace = 'rgb',&#10;                       interpolate = True, opacity = 0)&#10;&#10;pos1 = visual.Circle(win = win, pos=positions['pos1'], radius = markerSize,&#10;                     edges=256, lineColor = (1, 1, 1), fillColor = 'black',&#10;                     fillColorSpace = 'rgb', interpolate = True, opacity =&#10;                     circleOpacity)&#10;&#10;pos2 = visual.Circle(win = win, pos=positions['pos2'], radius = markerSize,&#10;                     edges=256, lineColor = (1, 1, 1), fillColor = 'black',&#10;                     fillColorSpace = 'rgb', interpolate = True, opacity =&#10;                     circleOpacity)&#10;&#10;pos3 = visual.Circle(win = win, pos=positions['pos3'], radius = markerSize,&#10;                     edges=256, lineColor = (1, 1, 1), fillColor = 'black',&#10;                     fillColorSpace = 'rgb', interpolate = True, opacity =&#10;                     circleOpacity)&#10;&#10;pos4 = visual.Circle(win = win, pos=positions['pos4'], radius = markerSize,&#10;                     edges=256, lineColor = (1, 1, 1), fillColor = 'black',&#10;                     fillColorSpace = 'rgb', interpolate = True, opacity =&#10;                     circleOpacity)&#10;&#10;target = visual.Circle(win = win, pos=positions['pos4'], radius = markerSize,&#10;                     edges=256, lineColor = (1, 1, 1), fillColor = targetFillColor,&#10;                     fillColorSpace = 'rgb', interpolate = True, opacity = 1)" valType="code" updates="constant"/>
+        <Param name="End Routine" val="" valType="code" updates="constant"/>
+        <Param name="End Experiment" val="" valType="code" updates="constant"/>
+      </CodeComponent>
+      <GratingComponent name="pos1">
+        <Param name="opacity" val="1" valType="code" updates="constant"/>
+        <Param name="tex" val="" valType="str" updates="constant"/>
+        <Param name="colorSpace" val="rgb" valType="str" updates="constant"/>
+        <Param name="name" val="pos1" valType="code" updates="constant"/>
+        <Param name="color" val="$[1,1,1]" valType="str" updates="constant"/>
+        <Param name="stopVal" val="30" valType="code" updates="constant"/>
+        <Param name="durationEstim" val="0.5" valType="code" updates="None"/>
+        <Param name="mask" val="circle" valType="str" updates="constant"/>
+        <Param name="pos" val="[0, 0]" valType="code" updates="constant"/>
+        <Param name="interpolate" val="linear" valType="str" updates="constant"/>
+        <Param name="startEstim" val="0" valType="code" updates="None"/>
+        <Param name="units" val="from exp settings" valType="str" updates="None"/>
+        <Param name="texture resolution" val="128" valType="code" updates="constant"/>
+        <Param name="phase" val="0.0" valType="code" updates="constant"/>
+        <Param name="startType" val="frame N" valType="str" updates="None"/>
+        <Param name="ori" val="0" valType="code" updates="constant"/>
+        <Param name="stopType" val="duration (frames)" valType="str" updates="None"/>
+        <Param name="startVal" val="0" valType="code" updates="None"/>
+        <Param name="sf" val="None" valType="code" updates="constant"/>
+        <Param name="advancedParams"/>
+        <Param name="size" val="[200, 200]" valType="code" updates="constant"/>
+      </GratingComponent>
+      <GratingComponent name="pos2">
+        <Param name="opacity" val="1" valType="code" updates="constant"/>
+        <Param name="tex" val="" valType="str" updates="constant"/>
+        <Param name="colorSpace" val="rgb" valType="str" updates="constant"/>
+        <Param name="name" val="pos2" valType="code" updates="constant"/>
+        <Param name="color" val="$[1,1,1]" valType="str" updates="constant"/>
+        <Param name="stopVal" val="30" valType="code" updates="constant"/>
+        <Param name="durationEstim" val="0.5" valType="code" updates="None"/>
+        <Param name="mask" val="None" valType="str" updates="constant"/>
+        <Param name="pos" val="[0, 0]" valType="code" updates="constant"/>
+        <Param name="interpolate" val="linear" valType="str" updates="constant"/>
+        <Param name="startEstim" val="0" valType="code" updates="None"/>
+        <Param name="units" val="from exp settings" valType="str" updates="None"/>
+        <Param name="texture resolution" val="128" valType="code" updates="constant"/>
+        <Param name="phase" val="0.0" valType="code" updates="constant"/>
+        <Param name="startType" val="frame N" valType="str" updates="None"/>
+        <Param name="ori" val="0" valType="code" updates="constant"/>
+        <Param name="stopType" val="duration (frames)" valType="str" updates="None"/>
+        <Param name="startVal" val="0" valType="code" updates="None"/>
+        <Param name="sf" val="None" valType="code" updates="constant"/>
+        <Param name="advancedParams"/>
+        <Param name="size" val="[200, 200]" valType="code" updates="constant"/>
+      </GratingComponent>
+      <GratingComponent name="pos3">
+        <Param name="opacity" val="1" valType="code" updates="constant"/>
+        <Param name="tex" val="sin" valType="str" updates="constant"/>
+        <Param name="colorSpace" val="rgb" valType="str" updates="constant"/>
+        <Param name="name" val="pos3" valType="code" updates="constant"/>
+        <Param name="color" val="$[1,1,1]" valType="str" updates="constant"/>
+        <Param name="stopVal" val="30" valType="code" updates="constant"/>
+        <Param name="durationEstim" val="0.5" valType="code" updates="None"/>
+        <Param name="mask" val="None" valType="str" updates="constant"/>
+        <Param name="pos" val="[0, 0]" valType="code" updates="constant"/>
+        <Param name="interpolate" val="linear" valType="str" updates="constant"/>
+        <Param name="startEstim" val="0" valType="code" updates="None"/>
+        <Param name="units" val="from exp settings" valType="str" updates="None"/>
+        <Param name="texture resolution" val="128" valType="code" updates="constant"/>
+        <Param name="phase" val="0.0" valType="code" updates="constant"/>
+        <Param name="startType" val="frame N" valType="str" updates="None"/>
+        <Param name="ori" val="0" valType="code" updates="constant"/>
+        <Param name="stopType" val="duration (frames)" valType="str" updates="None"/>
+        <Param name="startVal" val="0" valType="code" updates="None"/>
+        <Param name="sf" val="None" valType="code" updates="constant"/>
+        <Param name="advancedParams"/>
+        <Param name="size" val="[0.5, 0.5]" valType="code" updates="constant"/>
+      </GratingComponent>
+      <GratingComponent name="pos4">
+        <Param name="opacity" val="1" valType="code" updates="constant"/>
+        <Param name="tex" val="sin" valType="str" updates="constant"/>
+        <Param name="colorSpace" val="rgb" valType="str" updates="constant"/>
+        <Param name="name" val="pos4" valType="code" updates="constant"/>
+        <Param name="color" val="$[1,1,1]" valType="str" updates="constant"/>
+        <Param name="stopVal" val="30" valType="code" updates="constant"/>
+        <Param name="durationEstim" val="0.5" valType="code" updates="None"/>
+        <Param name="mask" val="None" valType="str" updates="constant"/>
+        <Param name="pos" val="[0, 0]" valType="code" updates="constant"/>
+        <Param name="interpolate" val="linear" valType="str" updates="constant"/>
+        <Param name="startEstim" val="0" valType="code" updates="None"/>
+        <Param name="units" val="from exp settings" valType="str" updates="None"/>
+        <Param name="texture resolution" val="128" valType="code" updates="constant"/>
+        <Param name="phase" val="0.0" valType="code" updates="constant"/>
+        <Param name="startType" val="frame N" valType="str" updates="None"/>
+        <Param name="ori" val="0" valType="code" updates="constant"/>
+        <Param name="stopType" val="duration (frames)" valType="str" updates="None"/>
+        <Param name="startVal" val="0" valType="code" updates="None"/>
+        <Param name="sf" val="None" valType="code" updates="constant"/>
+        <Param name="advancedParams"/>
+        <Param name="size" val="[0.5, 0.5]" valType="code" updates="constant"/>
+      </GratingComponent>
+      <GratingComponent name="target">
+        <Param name="opacity" val="1" valType="code" updates="constant"/>
+        <Param name="tex" val="sin" valType="str" updates="constant"/>
+        <Param name="colorSpace" val="rgb" valType="str" updates="constant"/>
+        <Param name="name" val="target" valType="code" updates="constant"/>
+        <Param name="color" val="$[1,1,1]" valType="str" updates="constant"/>
+        <Param name="stopVal" val="30" valType="code" updates="constant"/>
+        <Param name="durationEstim" val="0.5" valType="code" updates="None"/>
+        <Param name="mask" val="None" valType="str" updates="constant"/>
+        <Param name="pos" val="thisPosition" valType="code" updates="set every repeat"/>
+        <Param name="interpolate" val="linear" valType="str" updates="constant"/>
+        <Param name="startEstim" val="0" valType="code" updates="None"/>
+        <Param name="units" val="from exp settings" valType="str" updates="None"/>
+        <Param name="texture resolution" val="128" valType="code" updates="constant"/>
+        <Param name="phase" val="0.0" valType="code" updates="constant"/>
+        <Param name="startType" val="frame N" valType="str" updates="None"/>
+        <Param name="ori" val="0" valType="code" updates="constant"/>
+        <Param name="stopType" val="duration (frames)" valType="str" updates="None"/>
+        <Param name="startVal" val="0" valType="code" updates="None"/>
+        <Param name="sf" val="None" valType="code" updates="constant"/>
+        <Param name="advancedParams"/>
+        <Param name="size" val="[0.5, 0.5]" valType="code" updates="constant"/>
+      </GratingComponent>
+      <TextComponent name="fixCross">
+        <Param name="opacity" val="0.3" valType="code" updates="constant"/>
+        <Param name="colorSpace" val="rgb" valType="str" updates="constant"/>
+        <Param name="name" val="fixCross" valType="code" updates="None"/>
+        <Param name="wrapWidth" val="" valType="code" updates="constant"/>
+        <Param name="color" val="white" valType="str" updates="constant"/>
+        <Param name="text" val="+" valType="str" updates="constant"/>
+        <Param name="stopVal" val="30" valType="code" updates="constant"/>
+        <Param name="durationEstim" val="0.5" valType="code" updates="None"/>
+        <Param name="pos" val="[0, 0]" valType="code" updates="constant"/>
+        <Param name="flip" val="" valType="str" updates="constant"/>
+        <Param name="startEstim" val="0" valType="code" updates="None"/>
+        <Param name="units" val="from exp settings" valType="str" updates="None"/>
+        <Param name="startType" val="frame N" valType="str" updates="None"/>
+        <Param name="ori" val="0" valType="code" updates="constant"/>
+        <Param name="stopType" val="duration (frames)" valType="str" updates="None"/>
+        <Param name="startVal" val="0" valType="code" updates="None"/>
+        <Param name="font" val="Arial" valType="str" updates="constant"/>
+        <Param name="letterHeight" val="30" valType="code" updates="constant"/>
+      </TextComponent>
+    </Routine>
+    <Routine name="pause">
+      <TextComponent name="text">
+        <Param name="opacity" val="1" valType="code" updates="constant"/>
+        <Param name="colorSpace" val="rgb" valType="str" updates="constant"/>
+        <Param name="name" val="text" valType="code" updates="None"/>
+        <Param name="wrapWidth" val="" valType="code" updates="constant"/>
+        <Param name="color" val="white" valType="str" updates="constant"/>
+        <Param name="text" val="pause" valType="str" updates="constant"/>
+        <Param name="stopVal" val="10" valType="code" updates="constant"/>
+        <Param name="durationEstim" val="" valType="code" updates="None"/>
+        <Param name="pos" val="[0, 0]" valType="code" updates="constant"/>
+        <Param name="flip" val="" valType="str" updates="constant"/>
+        <Param name="startEstim" val="" valType="code" updates="None"/>
+        <Param name="units" val="from exp settings" valType="str" updates="None"/>
+        <Param name="startType" val="time (s)" valType="str" updates="None"/>
+        <Param name="ori" val="0" valType="code" updates="constant"/>
+        <Param name="stopType" val="duration (s)" valType="str" updates="None"/>
+        <Param name="startVal" val="0.0" valType="code" updates="None"/>
+        <Param name="font" val="Arial" valType="str" updates="constant"/>
+        <Param name="letterHeight" val="30" valType="code" updates="constant"/>
+      </TextComponent>
+      <KeyboardComponent name="key_resp_2">
+        <Param name="correctAns" val="" valType="str" updates="constant"/>
+        <Param name="storeCorrect" val="False" valType="bool" updates="constant"/>
+        <Param name="name" val="key_resp_2" valType="code" updates="None"/>
+        <Param name="stopVal" val="10" valType="code" updates="constant"/>
+        <Param name="durationEstim" val="" valType="code" updates="None"/>
+        <Param name="forceEndRoutine" val="True" valType="bool" updates="constant"/>
+        <Param name="startEstim" val="" valType="code" updates="None"/>
+        <Param name="discard previous" val="True" valType="bool" updates="constant"/>
+        <Param name="startType" val="time (s)" valType="str" updates="None"/>
+        <Param name="allowedKeys" val="'space'" valType="code" updates="constant"/>
+        <Param name="stopType" val="duration (s)" valType="str" updates="None"/>
+        <Param name="startVal" val="0.0" valType="code" updates="None"/>
+        <Param name="store" val="nothing" valType="str" updates="constant"/>
+      </KeyboardComponent>
+    </Routine>
+  </Routines>
+  <Flow>
+    <LoopInitiator loopType="TrialHandler" name="outer_loop">
+      <Param name="conditionsFile" val="" valType="str" updates="None"/>
+      <Param name="name" val="outer_loop" valType="code" updates="None"/>
+      <Param name="random seed" val="" valType="code" updates="None"/>
+      <Param name="loopType" val="sequential" valType="str" updates="None"/>
+      <Param name="nReps" val="5" valType="code" updates="None"/>
+      <Param name="endPoints" val="[0, 1]" valType="num" updates="None"/>
+      <Param name="conditions" val="None" valType="str" updates="None"/>
+    </LoopInitiator>
+    <LoopInitiator loopType="TrialHandler" name="inner_loop">
+      <Param name="conditionsFile" val="" valType="str" updates="None"/>
+      <Param name="name" val="inner_loop" valType="code" updates="None"/>
+      <Param name="random seed" val="" valType="code" updates="None"/>
+      <Param name="loopType" val="sequential" valType="str" updates="None"/>
+      <Param name="nReps" val="10" valType="code" updates="None"/>
+      <Param name="endPoints" val="[0, 1]" valType="num" updates="None"/>
+      <Param name="conditions" val="None" valType="str" updates="None"/>
+    </LoopInitiator>
+    <Routine name="trial"/>
+    <LoopTerminator name="inner_loop"/>
+    <LoopTerminator name="outer_loop"/>
+  </Flow>
+</PsychoPy2experiment>
