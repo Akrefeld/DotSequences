@@ -232,7 +232,7 @@ routineTimer = core.CountdownTimer()  # to track time remaining of each (non-sli
 
 
 # set up handler to look after randomisation of conditions etc
-blockLoop = data.TrialHandler(nReps=2, method=u'sequential', 
+blockLoop = data.TrialHandler(nReps=1, method=u'sequential', 
     extraInfo=expInfo, originPath=None,
     trialList=[None],
     seed=None, name='blockLoop')
@@ -263,6 +263,9 @@ for thisBlockLoop in blockLoop:
         for paramName in thisTrialLoop.keys():
             exec(paramName + '= thisTrialLoop.' + paramName)
 
+    observedHistory = []
+    thisSequence = markovChainGenerator(stateSpace, trans, observedHistory, start_probs)
+
     for thisTrialLoop in trialLoop:
         currentLoop = trialLoop
         # abbreviate parameter names if possible (e.g. rgb = thisTrialLoop.rgb)
@@ -275,14 +278,17 @@ for thisBlockLoop in blockLoop:
         trialClock.reset()  # clock 
         frameN = -1
 
-        observedHistory = []
-        thisSequence = markovChainGenerator(stateSpace, trans, observedHistory, start_probs)
+
         observedHistory.append(thisSequence.next())
+        
+        # target.setPos(positions[thisMarkovChain[trials.thisN]])
+        target.setPos(positions[observedHistory[-1]])
+    
 
+        currentLoop.addData('observedHistory', observedHistory[-1])
+        
 
-
-################################################################################
-### demo
+        ### demo
         trialComponents = []
         trialComponents.append(pos1)
         trialComponents.append(pos2)
@@ -290,13 +296,110 @@ for thisBlockLoop in blockLoop:
         trialComponents.append(pos4)
         trialComponents.append(target)
         trialComponents.append(fixCross)
+
+        for thisComponent in trialComponents:
+            if hasattr(thisComponent, 'status'):
+                thisComponent.status = NOT_STARTED
+
+        #-------Start Routine "trial"-------
+        continueRoutine = True
+        while continueRoutine:
+            # get current time
+            t = trialClock.getTime()
+            frameN = frameN + 1  # number of completed frames (so 0 is the first frame)
+            # target.setPos(positions[thisMarkovChain[trials.thisN]])
+            # history.append(positions[thisMarkovChain[trials.thisN]])
+            # update/draw components on each frame
+            
+            
+            # *pos1* updates
+            if frameN >= 0 and pos1.status == NOT_STARTED:
+                # keep track of start time/frame for later
+                pos1.tStart = t  # underestimates by a little under one frame
+                pos1.frameNStart = frameN  # exact frame index
+                pos1.setAutoDraw(True)
+            elif pos1.status == STARTED and frameN >= (pos1.frameNStart + trialDuration):
+                pos1.setAutoDraw(False)
+            
+            # *pos2* updates
+            if frameN >= 0 and pos2.status == NOT_STARTED:
+                # keep track of start time/frame for later
+                pos2.tStart = t  # underestimates by a little under one frame
+                pos2.frameNStart = frameN  # exact frame index
+                pos2.setAutoDraw(True)
+            elif pos2.status == STARTED and frameN >= (pos2.frameNStart + trialDuration):
+                pos2.setAutoDraw(False)
+            
+            # *pos3* updates
+            if frameN >= 0 and pos3.status == NOT_STARTED:
+                # keep track of start time/frame for later
+                pos3.tStart = t  # underestimates by a little under one frame
+                pos3.frameNStart = frameN  # exact frame index
+                pos3.setAutoDraw(True)
+            elif pos3.status == STARTED and frameN >= (pos3.frameNStart + trialDuration):
+                pos3.setAutoDraw(False)
+            
+            # *pos4* updates
+            if frameN >= 0 and pos4.status == NOT_STARTED:
+                # keep track of start time/frame for later
+                pos4.tStart = t  # underestimates by a little under one frame
+                pos4.frameNStart = frameN  # exact frame index
+                pos4.setAutoDraw(True)
+            elif pos4.status == STARTED and frameN >= (pos4.frameNStart + trialDuration):
+                pos4.setAutoDraw(False)
+            
+            # *target* updates
+            if frameN >= 0 and target.status == NOT_STARTED:
+                # keep track of start time/frame for later
+                target.tStart = t  # underestimates by a little under one frame
+                target.frameNStart = frameN  # exact frame index
+                target.setAutoDraw(True)
+            elif target.status == STARTED and frameN >= (target.frameNStart + targetDuration):
+                target.setAutoDraw(False)
+            
+            # *fixCross* updates
+            if frameN >= 0 and fixCross.status == NOT_STARTED:
+                # keep track of start time/frame for later
+                fixCross.tStart = t  # underestimates by a little under one frame
+                fixCross.frameNStart = frameN  # exact frame index
+                fixCross.setAutoDraw(True)
+            elif fixCross.status == STARTED and frameN >= (fixCross.frameNStart + trialDuration):
+                fixCross.setAutoDraw(False)
+            
+            # check if all components have finished
+            if not continueRoutine:  # a component has requested a forced-end of Routine
+                routineTimer.reset()  # if we abort early the non-slip timer needs reset
+                break
+            continueRoutine = False  # will revert to True if at least one component still running
+            for thisComponent in trialComponents:
+                if hasattr(thisComponent, "status") and thisComponent.status != FINISHED:
+                    continueRoutine = True
+                    break  # at least one component has not yet finished
+            
+            # check for quit (the [Esc] key)
+            if event.getKeys(["escape"]):
+                core.quit()
+            
+            # refresh the screen
+            if continueRoutine:  # don't flip if this routine is over or we'll get a blank screen
+                win.flip()
+            else:  # this Routine was not non-slip safe so reset non-slip timer
+                routineTimer.reset()
         
-        [item.draw() for item in trialComponents]
-        win.flip()
-        core.wait(5)
+        #-------Ending Routine "trial"-------
+        for thisComponent in trialComponents:
+            if hasattr(thisComponent, "setAutoDraw"):
+                thisComponent.setAutoDraw(False)
+        
+        thisExp.nextEntry()
+
+        ### start demo
+        # [item.draw() for item in trialComponents]
+        # win.flip()
+        # core.wait(2)
 
         ### end demo
-        ################################################################################
+        #####################################################################
 
     # end'trialLoop'
         
