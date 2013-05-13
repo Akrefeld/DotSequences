@@ -39,34 +39,36 @@ thisExp = data.ExperimentHandler(name=expName, version='',
     savePickle=True, saveWideText=True,
     dataFileName=filename)
 
+backgroundColor = [-1, -1, -1]
 # Setup the Window
 win = visual.Window(size=[800, 800], fullscr=False, screen=0, allowGUI=True, allowStencil=False,
-    monitor=u'testMonitor', color=[-1,-1,-1], colorSpace=u'rgb')
+    monitor=u'testMonitor', color=backgroundColor, colorSpace=u'rgb')
 
 # Initialize components for Routine "trial"
 trialClock = core.Clock()
 
 
 circleOpacity = 0.3
-circleRadius = 100
+circleRadius = 200
 markerSize = 20
-targetColor = [1, 1, -1] # yellow
+targetColor = [1, 0.5, -1] # [1, 1, -1] # yellow
 targetDuration = 30
 targetSize = [40, 40]
-isi = 30
+isi = 60
 trialDuration = targetDuration + isi
 
 
-# generate Markov chain
-def weighted_choice(weights):
+def weighted_choice(weights, n_picks):
     """
-    Given a list of weights, this function returns an index randomly, according to these weights
+    Weighted random selection
+    returns n_picks random indexes.
+    the chance to pick the index i 
+    is give by the weight weights[i].
+    Weights don't have to sum to 1.
     """
-    rnd = rand.random() * sum(weights)
-    for i, w in enumerate(weights):
-        rnd -= w
-        if rnd < 0:
-            return i
+    t = np.cumsum(weights)
+    s = np.sum(weights)
+    return np.searchsorted(t, np.random.rand(n_picks)*s)
 
 stateSpace = ['A','B','C','D']
 N = len(stateSpace)
@@ -86,10 +88,10 @@ trans_mat = np.random.randint(0,100.0,N*N).reshape(N,N).astype(float)
 # with the following (/=) we can eliminate intermediate temp variables:
 trans_mat /= trans_mat.sum(axis=1)[:, np.newaxis]
 
-# trans_mat = np.array([[0.6, 0.2, 0.1, 0.1],
-#                       [0.3, 0.5, 0.2, 0.0],
-#                       [0.0, 0.3, 0.5, 0.2],
-#                       [0.2, 0.0, 0.2, 0.6]])
+trans_mat = np.array([[0, 1, 0, 0],
+                        [0, 0, 1, 0], 
+                        [0, 0, 0, 1],
+                        [1, 0, 0, 0]])
 
 # check if trans_mat is a stochastic matrix
 isStochastic = trans_mat.sum(axis=1)
@@ -100,16 +102,16 @@ trans = pd.DataFrame(trans_mat, index=stateSpace, columns=stateSpace)
 ##
 def markovChain(stateSpace, trans, start_probs, chain_length=10):
     seq = []
-    seq.append(stateSpace[weighted_choice(start_probs)])
+    seq.append(stateSpace[weighted_choice(start_probs, 1)])
     
     for k in range(chain_length):
         # .loc introduced in 0.11 - not available in psychopy version of pandas
         # seq.append(stateSpace[weighted_choice(trans.loc[seq[k]])])
         # use .ix instead
-         seq.append(stateSpace[weighted_choice(trans.ix[seq[k]])])
+         seq.append(stateSpace[weighted_choice(trans.ix[seq[k]], 1)])
     return seq
     #
-thisMarkovChain = markovChain(stateSpace, trans, start_probs, chain_length=100)
+thisMarkovChain = markovChain(stateSpace, trans, start_probs, chain_length=1000)
 print thisMarkovChain
     
 # TODO: position names would make more sense if A were top left, instead of top right
