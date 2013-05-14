@@ -68,13 +68,13 @@ trialClock = core.Clock()
 fontSize = 30
 circleOpacity = 0.3
 circleRadius = 200
-markerSize = 30
+markerSize = 40
 rectSize = 50
 lineWidth = 2 # pixels
 targetColor = [1, 0.75, -1] # [1, 1, -1] # yellow
 targetDuration = 30
 targetSize = [40, 40]
-isi = 60
+isi = 30
 trialDuration = targetDuration + isi
 
 
@@ -117,11 +117,17 @@ trans_mat = np.random.randint(0,100.0,nStates*nStates).reshape(nStates,nStates).
 # with the following (/=) we can eliminate intermediate temp variables:
 trans_mat /= trans_mat.sum(axis=1)[:, np.newaxis]
 
-# define an almost determistic path, i.e. A->B->C->D
-trans_mat = np.array([[0.1, 0.7, 0.1, 0.1],
-                      [0.1, 0.1, 0.7, 0.1], 
-                      [0.1, 0.1, 0.1, 0.7],
-                      [0.7, 0.1, 0.1, 0.1]])
+"""
+ define an almost determistic random, i.e. A->B->C->D
+with the option: stay, go left, go right (jumps across are not possible
+D -- A
+|    |
+C -- B
+"""
+trans_mat = np.array([[0.15, 0.7, 0, 0.15],
+                      [0.15, 0.15, 0.7, 0], 
+                      [0, 0.15, 0.15, 0.7],
+                      [0.7, 0, 0.15, 0.15]])
 
 # check if trans_mat is a stochastic matrix
 isStochastic = trans_mat.sum(axis=1)
@@ -224,6 +230,9 @@ elif expInfo['stimType'] == 'Circle':
     target = visual.Circle(win = win, pos=positions['A'], radius = markerSize,
                        edges=256, lineColor = targetColor, fillColor = targetColor,
                        fillColorSpace = 'rgb', interpolate = True, opacity = 1)
+
+    
+positionMarkers = ['pos1', 'pos2', 'pos3', 'pos4']
 
 # Create some handy timers
 globalClock = core.Clock()  # to track the time since experiment started
@@ -419,7 +428,10 @@ for thisBlockLoop in blockLoop:
         stimOut=params,
         dataOut=['n','all_mean','all_std', 'all_raw'])
     thisExp.nextEntry()
-
+    
+    # TODO: save full history
+    print observedHistory
+    
     # end 'blockLoop'
     
 # get names of stimulus parameters
