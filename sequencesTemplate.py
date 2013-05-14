@@ -20,7 +20,9 @@ expInfo = {u'session': u'001',
            u'participant': u'ae', 
            u'sequenceLength':25,
            u'fullScreen': False,
-            u'stimType': 'Circle'}
+           u'transitionType': u'det',
+           u'stimType': 'Circle'}
+# transitionType should be either 'rand' or 'det'
 # stimType should be either 'Rect' or 'Circle'
 
 # open dialogue window
@@ -109,13 +111,13 @@ solution from:
 http://stackoverflow.com/questions/8904694/how-to-normalize-a-2-dimensional-numpy-array-in-python-less-verbose
 """
 
-trans_mat = np.random.randint(0,100.0,nStates*nStates).reshape(nStates,nStates).astype(float) 
+trans_mat_random = np.random.randint(0,100.0,nStates*nStates).reshape(nStates,nStates).astype(float) 
 # row sums:
 # row_sums = trans_mat.sum(axis=1)
 # trans_mat = trans_mat / row_sums[:, np.newaxis]
 
 # with the following (/=) we can eliminate intermediate temp variables:
-trans_mat /= trans_mat.sum(axis=1)[:, np.newaxis]
+trans_mat_random /= trans_mat_random.sum(axis=1)[:, np.newaxis]
 
 """
  define an almost determistic random, i.e. A->B->C->D
@@ -124,18 +126,22 @@ D -- A
 |    |
 C -- B
 """
-trans_mat = np.array([[0.15, 0.7, 0, 0.15],
-                      [0.15, 0.15, 0.7, 0], 
-                      [0, 0.15, 0.15, 0.7],
-                      [0.7, 0, 0.15, 0.15]])
+trans_mat_deterministic = np.array([[0.15, 0.7, 0, 0.15],
+                                   [0.15, 0.15, 0.7, 0], 
+                                   [0, 0.15, 0.15, 0.7],
+                                   [0.7, 0, 0.15, 0.15]])
+
 
 # check if trans_mat is a stochastic matrix
-isStochastic = trans_mat.sum(axis=1)
-print isStochastic
+print trans_mat_random.sum(axis=1)
+print trans_mat_deterministic.sum(axis=1)
+# print isStochastic
 
-trans = pd.DataFrame(trans_mat, index=stateSpace, columns=stateSpace)
+trans_deterministic = pd.DataFrame(trans_mat_deterministic, index=stateSpace, columns=stateSpace)
+trans_random = pd.DataFrame(trans_mat_random, index=stateSpace, columns=stateSpace)
 
-
+transitionMatrices = {'det':trans_deterministic,
+                      'rand': trans_random}
 
 def markovChainGenerator(stateSpace, trans, history, start_probs):
     """
@@ -276,9 +282,12 @@ for thisBlockLoop in blockLoop:
     if thisTrialLoop != None:
         for paramName in thisTrialLoop.keys():
             exec(paramName + '= thisTrialLoop.' + paramName)
+    
 
+    thisTransitionType = expInfo['transitionType']
     observedHistory = []
-    thisSequence = markovChainGenerator(stateSpace, trans, observedHistory, start_probs)
+    thisSequence = markovChainGenerator(stateSpace, transitionMatrices[thisTransitionType], 
+                                        observedHistory, start_probs)
 
     for thisTrialLoop in trialLoop:
         currentLoop = trialLoop
