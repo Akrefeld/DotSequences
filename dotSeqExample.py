@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 """
-This experiment was created using PsychoPy2 Experiment Builder (v1.77.00), Mon May 13 16:16:50 2013
+This experiment was created using PsychoPy2 Experiment Builder (v1.77.00), Mon May 13 22:17:42 2013
 If you publish work using this script please cite the relevant PsychoPy publications
   Peirce, JW (2007) PsychoPy - Psychophysics software in Python. Journal of Neuroscience Methods, 162(1-2), 8-13.
   Peirce, JW (2009) Generating stimuli for neuroscience using PsychoPy. Frontiers in Neuroinformatics, 2:10. doi: 10.3389/neuro.11.010.2008
@@ -16,7 +16,7 @@ from numpy.random import random, randint, normal, shuffle
 import os  # handy system and path functions
 
 # Store info about the experiment session
-expName = 'dotSeqExample'  # from the Builder filename that created this script
+expName = u'dotSeqExample'  # from the Builder filename that created this script
 expInfo = {u'session': u'001', u'participant': u'ae'}
 dlg = gui.DlgFromDict(dictionary=expInfo, title=expName)
 if dlg.OK == False: core.quit()  # user pressed cancel
@@ -39,7 +39,7 @@ thisExp = data.ExperimentHandler(name=expName, version='',
 
 # Setup the Window
 win = visual.Window(size=[800, 800], fullscr=False, screen=0, allowGUI=True, allowStencil=False,
-    monitor='testMonitor', color=[0,0,0], colorSpace='rgb')
+    monitor=u'testMonitor', color=[0,0,0], colorSpace=u'rgb', units=u'pix')
 
 # Initialize components for Routine "trial"
 trialClock = core.Clock()
@@ -80,42 +80,42 @@ globalClock = core.Clock()  # to track the time since experiment started
 routineTimer = core.CountdownTimer()  # to track time remaining of each (non-slip) routine 
 
 # set up handler to look after randomisation of conditions etc
-outer_loop = data.TrialHandler(nReps=5, method='sequential', 
+blockLoop = data.TrialHandler(nReps=5, method=u'sequential', 
     extraInfo=expInfo, originPath=None,
     trialList=[None],
-    seed=None, name='outer_loop')
-thisExp.addLoop(outer_loop)  # add the loop to the experiment
-thisOuter_loop = outer_loop.trialList[0]  # so we can initialise stimuli with some values
-# abbreviate parameter names if possible (e.g. rgb=thisOuter_loop.rgb)
-if thisOuter_loop != None:
-    for paramName in thisOuter_loop.keys():
-        exec(paramName + '= thisOuter_loop.' + paramName)
+    seed=None, name='blockLoop')
+thisExp.addLoop(blockLoop)  # add the loop to the experiment
+thisBlockLoop = blockLoop.trialList[0]  # so we can initialise stimuli with some values
+# abbreviate parameter names if possible (e.g. rgb=thisBlockLoop.rgb)
+if thisBlockLoop != None:
+    for paramName in thisBlockLoop.keys():
+        exec(paramName + '= thisBlockLoop.' + paramName)
 
-for thisOuter_loop in outer_loop:
-    currentLoop = outer_loop
-    # abbreviate parameter names if possible (e.g. rgb = thisOuter_loop.rgb)
-    if thisOuter_loop != None:
-        for paramName in thisOuter_loop.keys():
-            exec(paramName + '= thisOuter_loop.' + paramName)
+for thisBlockLoop in blockLoop:
+    currentLoop = blockLoop
+    # abbreviate parameter names if possible (e.g. rgb = thisBlockLoop.rgb)
+    if thisBlockLoop != None:
+        for paramName in thisBlockLoop.keys():
+            exec(paramName + '= thisBlockLoop.' + paramName)
     
     # set up handler to look after randomisation of conditions etc
-    inner_loop = data.TrialHandler(nReps=10, method='sequential', 
+    trialLoop = data.TrialHandler(nReps=10, method=u'sequential', 
         extraInfo=expInfo, originPath=None,
         trialList=[None],
-        seed=None, name='inner_loop')
-    thisExp.addLoop(inner_loop)  # add the loop to the experiment
-    thisInner_loop = inner_loop.trialList[0]  # so we can initialise stimuli with some values
-    # abbreviate parameter names if possible (e.g. rgb=thisInner_loop.rgb)
-    if thisInner_loop != None:
-        for paramName in thisInner_loop.keys():
-            exec(paramName + '= thisInner_loop.' + paramName)
+        seed=None, name='trialLoop')
+    thisExp.addLoop(trialLoop)  # add the loop to the experiment
+    thisTrialLoop = trialLoop.trialList[0]  # so we can initialise stimuli with some values
+    # abbreviate parameter names if possible (e.g. rgb=thisTrialLoop.rgb)
+    if thisTrialLoop != None:
+        for paramName in thisTrialLoop.keys():
+            exec(paramName + '= thisTrialLoop.' + paramName)
     
-    for thisInner_loop in inner_loop:
-        currentLoop = inner_loop
-        # abbreviate parameter names if possible (e.g. rgb = thisInner_loop.rgb)
-        if thisInner_loop != None:
-            for paramName in thisInner_loop.keys():
-                exec(paramName + '= thisInner_loop.' + paramName)
+    for thisTrialLoop in trialLoop:
+        currentLoop = trialLoop
+        # abbreviate parameter names if possible (e.g. rgb = thisTrialLoop.rgb)
+        if thisTrialLoop != None:
+            for paramName in thisTrialLoop.keys():
+                exec(paramName + '= thisTrialLoop.' + paramName)
         
         #------Prepare to start Routine "trial"-------
         t = 0
@@ -299,37 +299,37 @@ for thisOuter_loop in outer_loop:
            # was no response the correct answer?!
            if str(isCatchTrial).lower() == 'none': keyResponse.corr = 1  # correct non-response
            else: keyResponse.corr = 0  # failed to respond (incorrectly)
-        # store data for inner_loop (TrialHandler)
-        inner_loop.addData('keyResponse.keys',keyResponse.keys)
-        inner_loop.addData('keyResponse.corr', keyResponse.corr)
+        # store data for trialLoop (TrialHandler)
+        trialLoop.addData('keyResponse.keys',keyResponse.keys)
+        trialLoop.addData('keyResponse.corr', keyResponse.corr)
         if keyResponse.keys != None:  # we had a response
-            inner_loop.addData('keyResponse.rt', keyResponse.rt)
+            trialLoop.addData('keyResponse.rt', keyResponse.rt)
         thisExp.nextEntry()
         
-    # completed 10 repeats of 'inner_loop'
+    # completed 10 repeats of 'trialLoop'
     
     # get names of stimulus parameters
-    if inner_loop.trialList in ([], [None], None):  params = []
-    else:  params = inner_loop.trialList[0].keys()
+    if trialLoop.trialList in ([], [None], None):  params = []
+    else:  params = trialLoop.trialList[0].keys()
     # save data for this loop
-    inner_loop.saveAsExcel(filename + '.xlsx', sheetName='inner_loop',
+    trialLoop.saveAsExcel(filename + '.xlsx', sheetName='trialLoop',
         stimOut=params,
         dataOut=['n','all_mean','all_std', 'all_raw'])
-    inner_loop.saveAsText(filename + 'inner_loop.csv', delim=',',
+    trialLoop.saveAsText(filename + 'trialLoop.csv', delim=',',
         stimOut=params,
         dataOut=['n','all_mean','all_std', 'all_raw'])
     thisExp.nextEntry()
     
-# completed 5 repeats of 'outer_loop'
+# completed 5 repeats of 'blockLoop'
 
 # get names of stimulus parameters
-if outer_loop.trialList in ([], [None], None):  params = []
-else:  params = outer_loop.trialList[0].keys()
+if blockLoop.trialList in ([], [None], None):  params = []
+else:  params = blockLoop.trialList[0].keys()
 # save data for this loop
-outer_loop.saveAsExcel(filename + '.xlsx', sheetName='outer_loop',
+blockLoop.saveAsExcel(filename + '.xlsx', sheetName='blockLoop',
     stimOut=params,
     dataOut=['n','all_mean','all_std', 'all_raw'])
-outer_loop.saveAsText(filename + 'outer_loop.csv', delim=',',
+blockLoop.saveAsText(filename + 'blockLoop.csv', delim=',',
     stimOut=params,
     dataOut=['n','all_mean','all_std', 'all_raw'])
 

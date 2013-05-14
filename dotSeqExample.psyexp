@@ -15,7 +15,7 @@
     <Param name="Save psydat file" val="True" valType="bool" updates="None"/>
     <Param name="expName" val="dotSeqExample" valType="str" updates="None"/>
     <Param name="logging level" val="exp" valType="code" updates="None"/>
-    <Param name="Units" val="use prefs" valType="str" updates="None"/>
+    <Param name="Units" val="pix" valType="str" updates="None"/>
     <Param name="Show info dlg" val="True" valType="bool" updates="None"/>
     <Param name="Saved data folder" val="Data" valType="code" updates="None"/>
     <Param name="Screen" val="1" valType="num" updates="None"/>
@@ -220,18 +220,18 @@
     </Routine>
   </Routines>
   <Flow>
-    <LoopInitiator loopType="TrialHandler" name="outer_loop">
+    <LoopInitiator loopType="TrialHandler" name="blockLoop">
       <Param name="conditionsFile" val="" valType="str" updates="None"/>
-      <Param name="name" val="outer_loop" valType="code" updates="None"/>
+      <Param name="name" val="blockLoop" valType="code" updates="None"/>
       <Param name="random seed" val="" valType="code" updates="None"/>
       <Param name="loopType" val="sequential" valType="str" updates="None"/>
       <Param name="nReps" val="5" valType="code" updates="None"/>
       <Param name="endPoints" val="[0, 1]" valType="num" updates="None"/>
       <Param name="conditions" val="None" valType="str" updates="None"/>
     </LoopInitiator>
-    <LoopInitiator loopType="TrialHandler" name="inner_loop">
+    <LoopInitiator loopType="TrialHandler" name="trialLoop">
       <Param name="conditionsFile" val="" valType="str" updates="None"/>
-      <Param name="name" val="inner_loop" valType="code" updates="None"/>
+      <Param name="name" val="trialLoop" valType="code" updates="None"/>
       <Param name="random seed" val="" valType="code" updates="None"/>
       <Param name="loopType" val="sequential" valType="str" updates="None"/>
       <Param name="nReps" val="10" valType="code" updates="None"/>
@@ -239,7 +239,7 @@
       <Param name="conditions" val="None" valType="str" updates="None"/>
     </LoopInitiator>
     <Routine name="trial"/>
-    <LoopTerminator name="inner_loop"/>
-    <LoopTerminator name="outer_loop"/>
+    <LoopTerminator name="trialLoop"/>
+    <LoopTerminator name="blockLoop"/>
   </Flow>
 </PsychoPy2experiment>

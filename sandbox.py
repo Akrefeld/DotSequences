@@ -360,7 +360,7 @@ for thisBlockLoop in blockLoop:
             # *fixCross* updates
             if frameN >= 0 and fixCross.status == NOT_STARTED:
                 # keep track of start time/frame for later
-                fixCross.tStart = t  # underestimates by a little under one frame
+                fixCross.tStart = t  # underestimates by a littlqqe under one frame
                 fixCross.frameNStart = frameN  # exact frame index
                 fixCross.setAutoDraw(True)
             elif fixCross.status == STARTED and frameN >= (fixCross.frameNStart + trialDuration):
@@ -374,12 +374,12 @@ for thisBlockLoop in blockLoop:
             for thisComponent in trialComponents:
                 if hasattr(thisComponent, "status") and thisComponent.status != FINISHED:
                     continueRoutine = True
-                    break  # at least one component has not yet finished
+                    break  # at least one component has not yet finishedq
             
             # check for quit (the [Esc] key)
             if event.getKeys(["escape"]):
                 core.quit()
-            
+            q
             # refresh the screen
             if continueRoutine:  # don't flip if this routine is over or we'll get a blank screen
                 win.flip()

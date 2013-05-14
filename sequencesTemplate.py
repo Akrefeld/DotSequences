@@ -37,7 +37,7 @@ fullScreen = expInfo['fullScreen']
 if not os.path.isdir('Data'):
     os.makedirs('Data')  # if this fails (e.g. permissions) we will get error
 filename = 'Data' + os.path.sep + '%s_%s' %(expInfo['participant'], expInfo['date'])
-logFile = logging.LogFile(filename+'.log', level=logging.EXP)
+logFile = logging.LogFile(filename+'.log', level=logging.DEBUG)
 logging.console.setLevel(logging.WARNING)  # this outputs to the screen, not a file
 
 # An ExperimentHandler isn't essential but helps with data saving
@@ -229,7 +229,12 @@ elif expInfo['stimType'] == 'Circle':
 globalClock = core.Clock()  # to track the time since experiment started
 routineTimer = core.CountdownTimer()  # to track time remaining of each (non-slip) routine
 
-
+"""
+TrialHandler usage:
+either use list of dictionaries or import csv:
+trialList = myDict
+trialList=data.importConditions('mainTrials.csv')
+"""
 
 # set up handler to look after randomisation of conditions etc
 blockLoop = data.TrialHandler(nReps=1, method=u'sequential', 
@@ -360,7 +365,7 @@ for thisBlockLoop in blockLoop:
             # *fixCross* updates
             if frameN >= 0 and fixCross.status == NOT_STARTED:
                 # keep track of start time/frame for later
-                fixCross.tStart = t  # underestimates by a littlqqe under one frame
+                fixCross.tStart = t  # underestimates by a little under one frame
                 fixCross.frameNStart = frameN  # exact frame index
                 fixCross.setAutoDraw(True)
             elif fixCross.status == STARTED and frameN >= (fixCross.frameNStart + trialDuration):
@@ -374,12 +379,12 @@ for thisBlockLoop in blockLoop:
             for thisComponent in trialComponents:
                 if hasattr(thisComponent, "status") and thisComponent.status != FINISHED:
                     continueRoutine = True
-                    break  # at least one component has not yet finishedq
+                    break  # at least one component has not yet finished
             
             # check for quit (the [Esc] key)
             if event.getKeys(["escape"]):
                 core.quit()
-            q
+            
             # refresh the screen
             if continueRoutine:  # don't flip if this routine is over or we'll get a blank screen
                 win.flip()
